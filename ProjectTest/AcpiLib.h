@@ -25,6 +25,7 @@ namespace AcpiWin {
 		VOID SaveAcpiOBJ(const wchar_t* p, HMODULE hDll);
 		BOOL fileExits(const std::string& filename);
 		BOOL DriverLoaded();
+		int GetType(std::string path);
 	private :
 		HANDLE hDriver;
 		HMODULE hDll;

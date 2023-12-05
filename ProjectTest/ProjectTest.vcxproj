@@ -146,6 +146,7 @@
     <ClInclude Include="AcpiWin.h" />
     <ClInclude Include="AmlBuilder.h" />
     <ClInclude Include="Log.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Acpilib.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="AcpiwinAccess.cpp" />
     <ClCompile Include="AmlBuilder.cpp" />
     <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AcpiLib.dll" />

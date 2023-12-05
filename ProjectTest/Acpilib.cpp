@@ -26,12 +26,14 @@ HANDLE AcpiWin::Acpilib::openAcpiService(HMODULE hdll)
 
         }
         else {
-            std::cout << "Failed to get function address." << std::endl;
+            LOG.writelog(L"Failed to get function address.");
+            //std::cout << "Failed to get function address." << std::endl;
             return handle;
         }
     }
     else {
-        std::cout << "Open ACPI Service Failed to load DLL." << std::endl;
+        LOG.writelog(L"Open ACPI Service Failed to load DLL.");
+       // std::cout << "Open ACPI Service Failed to load DLL." << std::endl;
     }
 
     return handle;
@@ -76,7 +78,8 @@ Return Value:
         typedef void(*SaveAcpiOBJ)(const wchar_t* p);
         SaveAcpiOBJ saveAcpiOBJ = (SaveAcpiOBJ)GetProcAddress(hDll, "SaveAcpiObjects"); // 获取DLL函数的地址
         if (saveAcpiOBJ != NULL) {
-            std::cout << "SaveAcpiObjects handle is ok" << std::endl;
+           // std::cout << "SaveAcpiObjects handle is ok" << std::endl;
+            LOG.writelog(L"SaveAcpiObjects handle is ok.");
             // const int 和HANDLE 都可以返回ture 如何取舍
          saveAcpiOBJ(p); // 通过函数指针调用DLL函数
 
@@ -105,6 +108,26 @@ BOOL AcpiWin::Acpilib::DriverLoaded()
 
    return TRUE;
    }
+
+int AcpiWin::Acpilib::GetType(std::string path)
+{
+    if (hDll != NULL) {
+        typedef int(*GetType)(std::string path);
+        GetType getType = (GetType)GetProcAddress(hDll, "GetNSType"); // 获取DLL函数的地址
+        if (getType != NULL) {
+            int rst = getType(path); 
+            std::cout << rst << std::endl;
+            return rst;
+        }
+        else {
+            LOG.writelog(L"GetNSType 为空指针");
+        }
+
+    } {
+        LOG.writelog(L"dll 文件加载失败");
+    }
+
+}
     
     
 
@@ -118,13 +141,23 @@ BOOL AcpiWin::Acpilib::QueryAcpiNS(HMODULE hdll)
         if (queryAcpiNS != NULL) {
             //HANDLE handle = 0;
             const int x = 0;
+          
            // const int 和HANDLE 都可以返回ture 如何取舍
            BOOL rst = queryAcpiNS(hDriver, x, 0xC1); // 通过函数指针调用DLL函数
             //std::cout << "handle is ok" << std::endl;
+           if (rst == TRUE) {
+               LOG.writelog(L"queryAcpiNS RESULT TRUE");
+           }
+           else {
+               LOG.writelog(L"queryAcpiNS RESULT FALSE");
+           }
+           
+           
             return rst;
         }
         else {
-            std::cout << "acpins is null" << std::endl;
+            LOG.writelog(L"qacpins is null");
+            //std::cout << "acpins is null" << std::endl;
         }
 
         return false;

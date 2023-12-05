@@ -4,8 +4,29 @@
 
 
 
+AcpiWin::Acpilib AcpiWin::AmlBuilder::GetAcpilib()
+{
+    
+    return *(this->pacpilib);
+}
+
+void AcpiWin::AmlBuilder::SetAcpiLib(AcpiWin::Acpilib acpilib)
+{
+    this->pacpilib = &acpilib;
+}
+
 void AcpiWin::AmlBuilder::GetMethodData(AcpiWin::AcpiNs acpiNS)
 {
+
+}
+
+void AcpiWin::AmlBuilder::GetIntData(AcpiWin::AcpiNs acpiNS)
+{
+    if (this->pacpilib != nullptr) {
+        int type = -1;
+       // type = (*pacpilib).
+    }
+        
 }
 
 int AcpiWin::AmlBuilder::GetNsType(std::string* pString , AcpiWin::Acpilib acpilib)
@@ -34,3 +55,5 @@ int AcpiWin::AmlBuilder::GetNsType(std::string* pString , AcpiWin::Acpilib acpil
    
 
 }
+
+
