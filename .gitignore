@@ -1,7 +1,6 @@
-/X64/
-/X64/X64/
-/X64/Debug/
-.vscode/
+X64
+Debug
+.vscode
 
 *.txt
 !/ProjectTest/note.txt
