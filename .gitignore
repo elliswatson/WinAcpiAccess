@@ -1,7 +1,7 @@
 X64
 Debug
 .vscode
-
+.vs
 *.txt
 !/ProjectTest/note.txt
 *.exe
