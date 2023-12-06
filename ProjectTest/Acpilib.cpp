@@ -128,6 +128,37 @@ int AcpiWin::Acpilib::GetType(std::string path)
     }
 
 }
+
+int* AcpiWin::Acpilib::GetValue(std::string path, USHORT type)
+{
+    int rst = -1;
+    //int* rst = -1;
+    //std::string sValue = path;
+    if (hDll != NULL) {
+        typedef void* (*GetValue)(std::string path,USHORT type);
+        GetValue getValue = (GetValue)GetProcAddress(hDll, "GetNSValue"); // 获取DLL函数的地址
+        if (getValue != NULL) {
+            void* rst = getValue(path,type);
+            std::cout << rst << std::endl;
+            return (static_cast<int*>(rst));
+        }
+        else {
+            LOG.writelog(L"GetNSValue 为空指针");
+        }
+
+    } {
+        LOG.writelog(L"dll 文件加载失败");
+        return &rst;
+    }
+    //return nullptr;
+}
+
+void AcpiWin::Acpilib::FreeArg(int* intptr)
+{
+    if (intptr != nullptr) {
+        delete intptr;
+    }
+}
     
     
 

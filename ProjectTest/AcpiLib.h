@@ -26,6 +26,8 @@ namespace AcpiWin {
 		BOOL fileExits(const std::string& filename);
 		BOOL DriverLoaded();
 		int GetType(std::string path);
+		int* GetValue(std::string path,USHORT type);
+		void FreeArg(int* intptr);
 	private :
 		HANDLE hDriver;
 		HMODULE hDll;

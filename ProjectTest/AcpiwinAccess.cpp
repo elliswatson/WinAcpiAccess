@@ -30,11 +30,7 @@ int main()
     const char* pcst = nullptr;
     pcst = utils.string2constChar(str);
    
-    //printf_s("%s\n", *pcst);
-    //
-    // 
      std::cout <<"pcst" << pcst << std::endl;
-    //LOG.writelog(pcst);
     char * charstr = utils.string2Char(str);
     
     std::cout << "charstr" << charstr << std::endl;
