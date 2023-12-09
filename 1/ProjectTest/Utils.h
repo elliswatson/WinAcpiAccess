@@ -1,5 +1,5 @@
 #include <iostream>
-
+namespace utils {
 	class Utils {
 	private:
 		const char* pcst;
@@ -13,5 +13,5 @@
 		const char* string2constChar(std::string str);
 		char* string2Char(std::string str);
 		std::string wstring2String(std::wstring wstr);
-		static std::string cout();
 	};
+}

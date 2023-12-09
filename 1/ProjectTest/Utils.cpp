@@ -1,28 +1,28 @@
 #include "Utils.h"
 #include <codecvt>
 #include <windows.h>
-#include <chrono>
 
-Utils::Utils(const std::string& str)
+
+utils::Utils::Utils(const std::string& str)
 {
 	pcst = string2constChar(str);
 	cstr = string2Char(str);
 }
 
-Utils::~Utils()
+utils::Utils::~Utils()
 {
 	delete[]pcst;
 	delete cstr;
 }
 
-std::wstring Utils::chartoWstring(const char* pchar)
+std::wstring utils::Utils::chartoWstring(const char* pchar)
 {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> conveerter;
 	std::wstring wideStr = conveerter.from_bytes(pchar);
 	return wideStr;
 }
 
-const char* Utils::string2constChar(std::string str)//string to cast const char *
+const char* utils::Utils::string2constChar(std::string str)//string to cast const char *
 {
 	const size_t bufferSize = str.length() + 1;
 	char* constc = new char[bufferSize];
@@ -31,7 +31,7 @@ const char* Utils::string2constChar(std::string str)//string to cast const char 
 }
 
 
-char* Utils::string2Char(std::string str)
+char* utils::Utils::string2Char(std::string str)
 {
 	const size_t bufferSize = str.length() + 1;
 	char* cstr = new char[bufferSize];
@@ -40,7 +40,7 @@ char* Utils::string2Char(std::string str)
 	
 }
 
-std::string Utils::wstring2String(std::wstring wstr)
+std::string utils::Utils::wstring2String(std::wstring wstr)
 {
 	int size = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);
 	if (size == 0) {
@@ -52,22 +52,3 @@ std::string Utils::wstring2String(std::wstring wstr)
 
 	return result;
 }
-
-std::string Utils::cout()
-{
-	// TODO: 在此处插入 return 语句
-	//L"%Y-%m-%d %H:%M:%S");
-	auto now = std::chrono::system_clock::now();
-	std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
-
-	std::tm localtime;
-
-	localtime_s(&localtime, &now_time_t);
-	char timestamp[20];
-	std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &localtime);
-	std::string str(timestamp);
-	return str;
-}
-
-
-

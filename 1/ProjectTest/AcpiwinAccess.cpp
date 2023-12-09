@@ -4,23 +4,21 @@
 #include "AmlBuilder.h"
 #include <iostream>
 #include "Utils.h"
-//#include "stdlib.h"
-#include "AcpiWin.h"
-#include <thread>
-//#include <chrono>
+#include "stdio.h"
+
 //#include "AcpiWin.h"
 int main()
 {   
-    AcpiWin::logger.logInfo("test");
+    /*
     AcpiWin::Acpilib acpilib;
     HANDLE hdriver = acpilib.openAcpiService(acpilib.getModule());
     acpilib.SetHdriver(hdriver);
     const wchar_t* pName = L"acpi.bin";
     //BOOL driverfg = acpilib.DriverLoaded();
-    //acpilib.QueryAcpiNS(acpilib.getModule());
-    //acpilib.SaveAcpiOBJ(pName, acpilib.getModule());
+    acpilib.QueryAcpiNS(acpilib.getModule());
+    acpilib.SaveAcpiOBJ(pName, acpilib.getModule());
 
-    /*
+    */
     
    // const char* pstr = "helloworld";
     //std::wstring str = utils.chartoWstring(pstr);
@@ -40,31 +38,9 @@ int main()
     std::wcout << "wstr" << wstr << std::endl;
     std::string dstr = utils.wstring2String(wstr);
     std::cout << "dstr" << dstr << std::endl;
-    while (true) {
-        std::this_thread::sleep_for(std::chrono::seconds(500));
-    }
-    */
-    std::cout << "this is a err";
-    std::cin.get();
-    AcpiWin::logger.logError("this is error");
-    AcpiWin::logger.logTrace("this is trace");
-    AcpiWin::logger.logDebug("this is debug");
-    AcpiWin::logger.logWarning("this is warning");
-    AcpiWin::logger.logInfo("this is info");
-    /*以下内容有错误
-    AcpiWin::AmlBuilder amdbuilder;
-    amdbuilder.pacpilib = &acpilib;
-    AcpiWin::AcpiNs acpins("\\",0);
-    acpins.Path = "\\____SB_PCI0_HID";
-    amdbuilder.GetIntData(acpins);
-    */
-
-   
-   
-   
-   
+    
     system("pause");
-   
+
     
 }
 

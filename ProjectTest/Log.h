@@ -3,7 +3,7 @@
 #include <string>
 #include <spdlog/spdlog.h>
 namespace AcpiWin {
-#ifdef GOOGLE_LOGGER
+#if 0
 #include <glog/logging.h>
 #define GLOG_NO_ABBREVIATED_SEVERITIES 
 
@@ -34,8 +34,28 @@ namespace AcpiWin {
 
 
 	class Logger {
+	private:
+		std::shared_ptr<spdlog::logger> logger_;
+		std::shared_ptr<spdlog::logger> console_logger_;
+		
+		Logger();
 	public:
-		Logger(const std::string filepath);
+		Logger(const std::string&) = delete;
+		Logger& operator=(const Logger&) = delete;
+		Logger(Logger&&) = delete;
+		Logger& operator=(Logger&&) = delete;
+		static Logger& GetInstance() {
+			static Logger instance;
+
+			
+			return instance;
+		};
+		void logTrace(const std::string& message);
+		void logDebug(const std::string& message);
+		void logInfo(const std::string& message);
+		void logWarning(const std::string& message);
+		void logError(const std::string& message);
+
 
 	};
 }
