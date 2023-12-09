@@ -21,18 +21,18 @@ HANDLE AcpiWin::Acpilib::openAcpiService(HMODULE hdll)
         if (openAcpiService != NULL) {
             handle = openAcpiService(); // 通过函数指针调用DLL函数 //返回driver的句柄
             std::cout << "OpenAcpiService handle is ok" << std::endl;
-            LOG.writelog(L"OpenAcpiService handle is ok");
+            logger.logInfo("OpenAcpiService handle is ok");
             return handle;
 
         }
         else {
-            LOG.writelog(L"Failed to get function address.");
+            logger.logError("Failed to get function address.");
             //std::cout << "Failed to get function address." << std::endl;
             return handle;
         }
     }
     else {
-        LOG.writelog(L"Open ACPI Service Failed to load DLL.");
+        logger.logError("Open ACPI Service Failed to load DLL.");
        // std::cout << "Open ACPI Service Failed to load DLL." << std::endl;
     }
 
@@ -79,7 +79,7 @@ Return Value:
         SaveAcpiOBJ saveAcpiOBJ = (SaveAcpiOBJ)GetProcAddress(hDll, "SaveAcpiObjects"); // 获取DLL函数的地址
         if (saveAcpiOBJ != NULL) {
            // std::cout << "SaveAcpiObjects handle is ok" << std::endl;
-            LOG.writelog(L"SaveAcpiObjects handle is ok.");
+            logger.logInfo("SaveAcpiObjects handle is ok.");
             // const int 和HANDLE 都可以返回ture 如何取舍
          saveAcpiOBJ(p); // 通过函数指针调用DLL函数
 
@@ -115,16 +115,18 @@ int AcpiWin::Acpilib::GetType(std::string path)
         typedef int(*GetType)(std::string path);
         GetType getType = (GetType)GetProcAddress(hDll, "GetNSType"); // 获取DLL函数的地址
         if (getType != NULL) {
+            std::cout << "path" << path << std::endl;
             int rst = getType(path); 
-            std::cout << rst << std::endl;
+           // std::cout <<"GetNSType" << rst << std::endl;
+            logger.logInfo("GetNSType" + rst);
             return rst;
         }
         else {
-            LOG.writelog(L"GetNSType 为空指针");
+            logger.logError("GetNSType 为空指针");
         }
 
     } {
-        LOG.writelog(L"dll 文件加载失败");
+        logger.logError("dll 文件加载失败");
     }
 
 }
@@ -143,11 +145,11 @@ int* AcpiWin::Acpilib::GetValue(std::string path, USHORT type)
             return (static_cast<int*>(rst));
         }
         else {
-            LOG.writelog(L"GetNSValue 为空指针");
+            logger.logError("GetNSValue 为空指针");
         }
 
     } {
-        LOG.writelog(L"dll 文件加载失败");
+        logger.logError("dll 文件加载失败");
         return &rst;
     }
     //return nullptr;
@@ -177,17 +179,17 @@ BOOL AcpiWin::Acpilib::QueryAcpiNS(HMODULE hdll)
            BOOL rst = queryAcpiNS(hDriver, x, 0xC1); // 通过函数指针调用DLL函数
             //std::cout << "handle is ok" << std::endl;
            if (rst == TRUE) {
-               LOG.writelog(L"queryAcpiNS RESULT TRUE");
+               logger.logError("queryAcpiNS RESULT TRUE");
            }
            else {
-               LOG.writelog(L"queryAcpiNS RESULT FALSE");
+               logger.logError("queryAcpiNS RESULT FALSE");
            }
            
            
             return rst;
         }
         else {
-            LOG.writelog(L"qacpins is null");
+            logger.logError("qacpins is null");
             //std::cout << "acpins is null" << std::endl;
         }
 

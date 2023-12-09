@@ -1,44 +1,48 @@
 ﻿#include "Log.h"
-#include <chrono>
-#include <iomanip>
-#include <codecvt>
-AcpiWin::Log::Log(const wchar_t* pstr ): file(pstr)
+#include <iostream>
+#include "fstream"
+
+
+#ifdef GOOGLE_LOGGER
+AcpiWin::Logger::Logger()
 {
-	if (!file.is_open())
-	{
-		std::cout << "failed to open file" << std::endl;
-	}
+
+	FLAGS_log_dir = "./logs/log.txt";
+	google::InitGoogleLogging("");
+	google::SetLogDestination(google::GLOG_INFO, FLAGS_log_dir.c_str());
+	
+
 }
 
-AcpiWin::Log::~Log()
+AcpiWin::Logger::~Logger()
 {
-	if (file.is_open()) {
-		file.close();
-	}
+	google::ShutdownGoogleLogging();
+	
 }
 
-std::fstream AcpiWin::Log::getfile()
+
+void AcpiWin::Logger::logInfo(const std::string& message)
 {
-	return std::fstream();
+	
+	LOG(INFO) << message;
+	google::FlushLogFiles(google::GLOG_INFO);
 }
 
-void AcpiWin::Log::writelog(const wchar_t* str)
+void AcpiWin::Logger::logWarning(const std::string& message)
 {
-	//L"%Y-%m-%d %H:%M:%S");
-	auto now = std::chrono::system_clock::now();
-	std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
+	
+	LOG(WARNING) << message;
+	google::FlushLogFiles(google::GLOG_INFO);
+}
 
-	std::tm localtime;
+void AcpiWin::Logger::logError(const std::string& message)
+{
+	LOG(ERROR) << message;
+	google::FlushLogFiles(google::GLOG_INFO);
+}
+#endif
 
-	localtime_s(&localtime, &now_time_t);
-	char timestamp[20];
-	std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &localtime);
-
-	std::wstring_convert<std::codecvt_utf8<wchar_t>> conveerter;
-	std::wstring wideStr = conveerter.from_bytes(timestamp);
-
-	if (file.is_open())
-	{
-		file << "[" << wideStr << "]" << str << std::endl;
-	}
+AcpiWin::Logger::Logger(const std::string filepath)
+{
+	
 }

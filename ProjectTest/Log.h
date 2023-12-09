@@ -1,20 +1,42 @@
 ﻿#ifndef _LOG_H_
 #define _LOG_H_
-#include <fstream>
-#include <iostream>
+#include <string>
+#include <spdlog/spdlog.h>
 namespace AcpiWin {
-	class Log {
-	private :
-		const wchar_t* logfile = L"log.txt";
-		std::wofstream file;
+#ifdef GOOGLE_LOGGER
+#include <glog/logging.h>
+#define GLOG_NO_ABBREVIATED_SEVERITIES 
+
+
+	class Logger {
+	private:
+		int FLAG_init;
+		Logger();
+		~Logger();
 	public:
 		
-		Log(const wchar_t* pstr);
-		~Log();
-		std::fstream getfile();
-		void writelog(const wchar_t* str);
+		Logger(const std::string&) = delete;
+		Logger& operator=(const Logger&)=delete;
+		Logger(Logger&&) = delete;
+		Logger& operator=(Logger&&) = delete;
+		static Logger& GetInstance() {
+			static Logger instance;
+			return instance;
+		};
+		void logInfo(const std::string& message);
+		void logWarning(const std::string& message);
+		void logError(const std::string& message);
+	
+		
+	};
+
+#endif // GOOGLE_LOGGER
+
+
+	class Logger {
+	public:
+		Logger(const std::string filepath);
 
 	};
 }
-
 #endif

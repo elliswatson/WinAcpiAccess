@@ -1,6 +1,6 @@
 #ifndef _AcpiWin_H_
 #define _AcpiWin_H_
-
+#include "Log.h"
 #include <string>
 #include <list>
 
@@ -8,6 +8,7 @@ namespace AcpiWin {
 
     class AcpiNs {
     public:
+       // Log logger;
         std::string Path;    // acpi path
         std::string Type;   // Type of data
         std::string strValue;
@@ -16,8 +17,8 @@ namespace AcpiWin {
         std::string strValueType;
         unsigned char* pbValue;
         std::string GetType(int type);
-        AcpiWin::AcpiNs();
-        AcpiWin::AcpiNs(std::string path, int type)
+        //AcpiNs();
+        AcpiNs(std::string path, int type)
         {
             Path = path;
             Type = GetType(type);

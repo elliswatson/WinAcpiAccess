@@ -1,5 +1,5 @@
 ﻿#include "AmlBuilder.h"
-
+#include "AcpiWin.h"
 
 
 
@@ -27,12 +27,16 @@ void AcpiWin::AmlBuilder::GetIntData(AcpiWin::AcpiNs acpiNS)
 {
     if (this->pacpilib != nullptr) {
         int type = -1;
+        logger.logInfo("type" + type);
+        //std::cout <<  << std::endl;
         type = this->pacpilib->GetType(acpiNS.Path);
         if (type != -1) {
             USHORT utype = (USHORT)type;
             int* intptr= this->pacpilib->GetValue(acpiNS.Path,utype);
             if (intptr != nullptr) {
                 acpiNS.ulValue = readInt64(intptr+0x10);
+                //std::cout << "ulValue" << acpiNS.ulValue << std::endl;
+                logger.logInfo("ulValue" + acpiNS.ulValue);
                 this->pacpilib->FreeArg(intptr);
             }
         }
