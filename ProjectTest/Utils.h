@@ -1,3 +1,6 @@
+#ifndef _UTILS_H_
+#define _UTILS_H_
+
 #include <iostream>
 
 	class Utils {
@@ -15,3 +18,4 @@
 		std::string wstring2String(std::wstring wstr);
 		static std::string cout();
 	};
+#endif

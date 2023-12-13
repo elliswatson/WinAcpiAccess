@@ -1,5 +1,5 @@
-#ifndef _AcpiWin_H_
-#define _AcpiWin_H_
+#ifndef _AcpiNS_H_
+#define _AcpiNS_H_
 #include "Log.h"
 #include <string>
 #include <list>
@@ -9,7 +9,7 @@ namespace AcpiWin {
     class AcpiNs {
     public:
        // Log logger;
-        std::string Path;    // acpi path
+        std::string Path;    //acpi path
         std::string Type;   // Type of data
         std::string strValue;
         long long int ulValue;
@@ -27,12 +27,6 @@ namespace AcpiWin {
     private:
         AcpiWin::AcpiNs* Parent;
         std::list<AcpiWin::AcpiNs> ChildItems;
-        /// <summary>
-        /// Constructor of acpi name space
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="type"></param>
-
 
     };
 }

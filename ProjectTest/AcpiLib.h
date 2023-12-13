@@ -12,8 +12,6 @@ namespace AcpiWin {
 	class Acpilib {
 	public:
 		
-		//= LoadLibrary(L"AcpiLib.dll");
-		//Acpilib();
 		Acpilib();
 		~Acpilib();
 		HANDLE openAcpiService(HMODULE hdll);

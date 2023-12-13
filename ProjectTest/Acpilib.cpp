@@ -1,10 +1,10 @@
-﻿#include "AcpiLib.h"
+﻿//#include "AcpiLib.h"
 #include <iostream>
 #include <fstream>
 #include <memory>
 #include <stdio.h>
 #include "AcpiWin.h"
-#include "Utils.h"
+
 AcpiWin::Acpilib::Acpilib()
 {
   hDll = LoadLibrary(L"Acpilib.dll"); // 加载DLL文件，获得DLL模块的句柄
