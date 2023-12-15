@@ -3,6 +3,7 @@
 #include "Log.h"
 #include <string>
 #include <list>
+#include <cstdint>
 
 namespace AcpiWin {
 
@@ -12,17 +13,27 @@ namespace AcpiWin {
         std::string Path;    //acpi path
         std::string Type;   // Type of data
         std::string strValue;
-        long long int ulValue;
-      
-        std::string strValueType;
-        unsigned char* pbValue;
+        uint64_t ulValue;
+        std::string strValueType; 
+        unsigned char* pbValue;  
+        void SetPath(std::string val);
         std::string GetType(int type);
         //AcpiNs();
         AcpiNs(std::string path, int type)
         {
-            Path = path;
-            Type = GetType(type);
+            SetPath(path);
+            SetType(GetType(type));
         }
+		std::string GetPath() const;
+		//void SetPath(std::string val);
+		std::string GetType() const;
+		void SetType(std::string val);
+		uint64_t GetUlValue() const;
+		void SetUlValue(uint64_t val);
+		std::string GetStrValueType() const;
+		void SetStrValueType(std::string val);
+		unsigned char* GetPbValue() const;
+		void SetPbValue(unsigned char* val);
 
     private:
         AcpiWin::AcpiNs* Parent;

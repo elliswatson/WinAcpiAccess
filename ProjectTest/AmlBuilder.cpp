@@ -32,14 +32,14 @@ void AcpiWin::AmlBuilder::GetIntData(AcpiWin::AcpiNs acpiNS)
         int type = -1;
         logger.logInfo("type" + type);
         //std::cout <<  << std::endl;
-        type = this->pacpilib->GetType(acpiNS.Path);
+        type = this->pacpilib->GetType(acpiNS.GetPath());
         if (type != -1) {
             USHORT utype = (USHORT)type;
-            int* intptr= this->pacpilib->GetValue(acpiNS.Path,utype);
+            int* intptr= this->pacpilib->GetValue(acpiNS.GetPath(),utype);
             if (intptr != nullptr) {
-                acpiNS.ulValue = readInt64(intptr+0x10);
+                acpiNS.SetUlValue(readInt64(intptr+0x10));
                 //std::cout << "ulValue" << acpiNS.ulValue << std::endl;
-                logger.logInfo("ulValue" + acpiNS.ulValue);
+                logger.logInfo("ulValue" + acpiNS.GetUlValue());
                 this->pacpilib->FreeArg(intptr);
             }
         }
@@ -52,10 +52,10 @@ void AcpiWin::AmlBuilder::GetStringData(AcpiWin::AcpiNs acpiNS)
 {
     if (this->pacpilib != nullptr) {
         int type = -1;
-        type = this->pacpilib->GetType(acpiNS.Path);
+        type = this->pacpilib->GetType(acpiNS.GetPath());
         if (type != -1) {
             USHORT utype = (USHORT)type;
-            int* intptr = this->pacpilib->GetValue(acpiNS.Path, utype);
+            int* intptr = this->pacpilib->GetValue(acpiNS.GetPath(), utype);
             if (intptr != nullptr) {
                 std::string strValue= std::to_string(*(intptr+0x10));
                 this->pacpilib->FreeArg(intptr);
@@ -71,17 +71,17 @@ void AcpiWin::AmlBuilder::GetBufferData(AcpiWin::AcpiNs acpiNS)
 
     if (this->pacpilib != nullptr) {
         int type = -1;
-        type = this->pacpilib->GetType(acpiNS.Path);
+        type = this->pacpilib->GetType(acpiNS.GetPath());
         if (type != -1) {
             USHORT utype = (USHORT)type;
-            int* intptr = this->pacpilib->GetValue(acpiNS.Path, utype);
+            int* intptr = this->pacpilib->GetValue(acpiNS.GetPath(), utype);
             if (intptr != nullptr) {
                 UINT32 val = (UINT32) * (intptr);
                 if (val == 0x426F6541) {
                     int DataLength =*(intptr + 0x4);
-                    if (acpiNS.pbValue == nullptr) {
+                    if (acpiNS.GetPbValue() == nullptr) {
                         //acpiNS.pbValue = byte[DataLength];
-                       // std::memcpy(acpiNS.pbValue,intptr, DataLength);
+                        //std::memcpy(acpiNS.pbValue,intptr, DataLength);
                     }
                 }
                 this->pacpilib->FreeArg(intptr);
@@ -96,17 +96,17 @@ void AcpiWin::AmlBuilder::GetPackgeData(AcpiWin::AcpiNs acpiNS)
 
     if (this->pacpilib != nullptr) {
         int type = -1;
-        type = this->pacpilib->GetType(acpiNS.Path);
+        type = this->pacpilib->GetType(acpiNS.GetPath());
         if (type != -1) {
             USHORT utype = (USHORT)type;
-            int* intptr = this->pacpilib->GetValue(acpiNS.Path, utype);
+            int* intptr = this->pacpilib->GetValue(acpiNS.GetPath(), utype);
             if (intptr != nullptr) {
                 UINT32 val = (UINT32) * (intptr);
                 if (val == 0x426F6541) {
                     int DataLength = *(intptr + 0x4);
-                    if (acpiNS.pbValue == nullptr) {
-                        acpiNS.pbValue = new unsigned char[DataLength];
-                        std::memcpy(acpiNS.pbValue, intptr, DataLength);
+                    if (acpiNS.GetPbValue() == nullptr) {
+                        acpiNS.SetPbValue(new unsigned char[DataLength]);
+                        std::memcpy(acpiNS.GetPbValue(), intptr, DataLength);
                     }
                 }
                 this->pacpilib->FreeArg(intptr);

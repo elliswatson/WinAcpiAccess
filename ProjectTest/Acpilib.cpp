@@ -113,22 +113,29 @@ BOOL AcpiWin::Acpilib::DriverLoaded()
 
 int AcpiWin::Acpilib::GetType(std::string path)
 {
-    if (hDll != NULL) {
-        typedef int(*GetType)(std::string path);
-        GetType getType = (GetType)GetProcAddress(hDll, "GetNSType"); // 获取DLL函数的地址
-        if (getType != NULL) {
-            std::cout << "path" << path << std::endl;
-            int rst = getType(path); 
-           // std::cout <<"GetNSType" << rst << std::endl;
-            logger.logInfo("GetNSType" + rst);
-            return rst;
-        }
-        else {
-            logger.logError("GetNSType 为空指针");
-        }
+    if (path.empty())
+    {
+        return 0;
+    }else {
+        if (hDll != NULL) {
+            typedef int(*GetType)(std::string path);
+            GetType getType = (GetType)GetProcAddress(hDll, "GetNSType"); // 获取DLL函数的地址
+            if (getType != NULL) {
+                std::cout << "path" << path << std::endl;
+                int rst = getType(path);
+                // std::cout <<"GetNSType" << rst << std::endl;
+                logger.logInfo("GetNSType" + rst);
+                return rst;
+            }
+            else {
+                logger.logError("GetNSType 为空指针,return Type 0");
+                return 0;
+            }
 
-    } {
-        logger.logError("dll 文件加载失败");
+        } {
+            logger.logError("dll 文件加载失败. return Type 0");
+            return 0;
+        }
     }
 
 }
@@ -152,9 +159,9 @@ int* AcpiWin::Acpilib::GetValue(std::string path, USHORT type)
 
     } {
         logger.logError("dll 文件加载失败");
-        return &rst;
+        return nullptr;
     }
-    //return nullptr;
+   // return nullptr;
 }
 
 void AcpiWin::Acpilib::FreeArg(int* intptr)
